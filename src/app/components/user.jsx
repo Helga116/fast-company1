@@ -1,27 +1,38 @@
-import React from 'react'
+import React from 'react';
+import Quality from './quality';
+import Bookmark from './bookmark';
 
-const User = (props) => {
-    console.log(props)
+
+const User = ({rest, handleDelete, handleToggleBookmark, ...user}) => {
+
     return (
-        <tr key={props._id}>
-            <td>{props.name}</td>
+        <tr key={user._id}>
+            <td>{user.name}</td>
             <td>
-                {props.qualities.map((item) => (
-                    <span
-                        className={'badge m-1 bg-' + item.color}
+                {user.qualities.map((item) => (
+                    <Quality
                         key={item._id}
-                    >
-                        {item.name}
-                    </span>
+                        id={item._id}
+                        name={item.name}
+                        color={item.color}
+                    />
                 ))}
             </td>
-            <td>{props.profession.name}</td>
-            <td>{props.completedMeetings}</td>
-            <td>{props.rate} /5</td>
-            <td>{props.bookmark}</td>
+            <td>{user.profession.name}</td>
+            <td>{user.completedMeetings}</td>
+            <td>{user.rate} /5</td>
+            <td>
+                <Bookmark
+                    key={user._id}
+                    id={user._id}
+                    {...user}
+                    status={user.bookmark}
+                    onClick={handleToggleBookmark}
+                />
+            </td>
             <td>
                 <button
-                    onClick={() => props.handleDelete(props._id)}
+                    onClick={() => handleDelete(user._id)}
                     className="btn btn-danger"
                 >
                     delete

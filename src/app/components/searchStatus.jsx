@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SearchStatus = (props) => {
+const SearchStatus = ({length}) => {
 
     const renderPhrase = (number) => {
         const lastOne = Number(number.toString().slice(-1))
@@ -13,12 +13,12 @@ const SearchStatus = (props) => {
     return (
         <span
             className={
-                'badge ' + (props.length > 0 ? 'bg-primary' : 'bg-danger')
+                'badge ' + (length > 0 ? 'bg-primary' : 'bg-danger')
             }
         >
-            {props.length > 0
+            {length > 0
                 ? `${
-                      props.length + ' ' + renderPhrase(props.length)
+                      length + ' ' + renderPhrase(length)
                   } с тобой сегодня`
                 : 'Никто с тобой не тусанет'}
         </span>

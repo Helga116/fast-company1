@@ -1,36 +1,10 @@
-import React, { useState } from 'react'
-import api from '../api'
-import Bookmark from './bookmark'
-import Quality from './quality'
-import SearchStatus from './searchStatus'
+import React from 'react'
+import User from './user'
 
-const Users = () => {
-    const [users, setUsers] = useState(api.users.fetchAll())
-
-    const [check, setChecked] = useState(false)
-
-    const handleDelete = (userId) => {
-        setUsers(users.filter((user) => user._id !== userId))
-    }
-
-    const handleToggleBookmark = (id) => {
-        const newStatus = users.map((user) => {
-            if (user._id === id) {
-                user.bookmark = !user.bookmark
-                console.log(user._id, id, user.bookmark)
-                return { ...user }
-            }
-            return user
-        })
-        setChecked(newStatus)
-    }
+const Users = ({ users, handleDelete, handleToggleBookmark }) => {
 
     return (
         <>
-            <h2>
-                <SearchStatus length={users.length} />
-            </h2>
-
             {users.length > 0 && (
                 <table className="table">
                     <thead>
@@ -46,39 +20,12 @@ const Users = () => {
                     </thead>
                     <tbody>
                         {users.map((user) => (
-                            <tr key={user._id}>
-                                <td>{user.name}</td>
-                                <td>
-                                    {user.qualities.map((item) => (
-                                        <Quality
-                                            key={item._id}
-                                            id={item._id}
-                                            name={item.name}
-                                            color={item.color}
-                                        />
-                                    ))}
-                                </td>
-                                <td>{user.profession.name}</td>
-                                <td>{user.completedMeetings}</td>
-                                <td>{user.rate} /5</td>
-                                <td>
-                                    <Bookmark
-                                        key={user._id}
-                                        id={user._id}
-                                        status={user.bookmark}
-                                        {...user}
-                                        onClick={handleToggleBookmark}
-                                    />
-                                </td>
-                                <td>
-                                    <button
-                                        onClick={() => handleDelete(user._id)}
-                                        className="btn btn-danger"
-                                    >
-                                        delete
-                                    </button>
-                                </td>
-                            </tr>
+                            <User
+                                // {...rest}
+                                {...user}
+                                handleDelete={handleDelete}
+                                handleToggleBookmark={handleToggleBookmark}
+                            />
                         ))}
                     </tbody>
                 </table>

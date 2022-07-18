@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Bookmark = (props) => {
+const Bookmark = ({ id, status, onClick, ...rest }) => {
     const bookmarkEmpty = (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -28,16 +28,16 @@ const Bookmark = (props) => {
     )
 
     const handleClick = () => {
-        props.onClick(props._id)
+        onClick(id)
     }
 
     const renderBookmark = () => {
-        return props.bookmark ? bookmarkFull : bookmarkEmpty
+        return status ? bookmarkFull : bookmarkEmpty
     }
 
     return (
         <button onClick={handleClick} className="btn btn-outline-secondary">
-            {renderBookmark(props._id)}
+            {renderBookmark(id)}
         </button>
     )
 }
