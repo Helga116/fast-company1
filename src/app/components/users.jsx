@@ -1,11 +1,22 @@
-import React from 'react'
-import User from './user'
+import React, { useState } from "react";
+import { paginate } from "../utils/paginate";
+import Pagination from "./pagination";
+import User from "./user";
+import PropTypes from "prop-types";
 
 const Users = ({ users, handleDelete, handleToggleBookmark }) => {
+    const count = users.length;
+    const pageSize = 4;
+    const [currentPage, setCurrentPage] = useState(1);
+    const handlePageChange = (pageIndex) => {
+        setCurrentPage(pageIndex);
+    };
+
+    const userCrop = paginate(users, currentPage, pageSize);
 
     return (
         <>
-            {users.length > 0 && (
+            {count > 0 && (
                 <table className="table">
                     <thead>
                         <tr>
@@ -19,19 +30,31 @@ const Users = ({ users, handleDelete, handleToggleBookmark }) => {
                         </tr>
                     </thead>
                     <tbody>
-                        {users.map((user) => (
+                        {userCrop.map((user) => (
                             <User
-                                // {...rest}
                                 {...user}
                                 handleDelete={handleDelete}
                                 handleToggleBookmark={handleToggleBookmark}
+                                key={user._id}
                             />
                         ))}
                     </tbody>
                 </table>
             )}
+            <Pagination
+                itemsCount={count}
+                pageSize={pageSize}
+                currentPage={currentPage}
+                onPageChange={handlePageChange}
+            />
         </>
-    )
-}
+    );
+};
 
-export default Users
+Users.propTypes = {
+    users: PropTypes.array.isRequired,
+    handleDelete: PropTypes.func.isRequired,
+    handleToggleBookmark: PropTypes.func.isRequired
+};
+
+export default Users;

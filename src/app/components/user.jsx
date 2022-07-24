@@ -1,13 +1,12 @@
-import React from 'react';
-import Quality from './quality';
-import Bookmark from './bookmark';
+import React from "react";
+import Quality from "./quality";
+import Bookmark from "./bookmark";
+import PropTypes from "prop-types";
 
-
-const User = ({rest, handleDelete, handleToggleBookmark, ...user}) => {
-
+const User = ({ handleDelete, handleToggleBookmark, ...user }) => {
     return (
-        <tr key={user._id}>
-            <td>{user.name}</td>
+        <tr>
+            <td>{user.name} </td>
             <td>
                 {user.qualities.map((item) => (
                     <Quality
@@ -39,7 +38,13 @@ const User = ({rest, handleDelete, handleToggleBookmark, ...user}) => {
                 </button>
             </td>
         </tr>
-    )
-}
+    );
+};
 
-export default User
+User.propTypes = {
+    handleDelete: PropTypes.func.isRequired,
+    handleToggleBookmark: PropTypes.func.isRequired
+
+};
+
+export default User;
