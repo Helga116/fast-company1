@@ -44,7 +44,6 @@ const User = ({ handleDelete, handleToggleBookmark, ...user }) => {
 User.propTypes = {
     handleDelete: PropTypes.func.isRequired,
     handleToggleBookmark: PropTypes.func.isRequired
-
 };
 
 export default User;
