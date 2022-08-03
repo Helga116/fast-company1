@@ -32,7 +32,7 @@ const qualities = {
     }
 };
 
-export const users = [
+const users = [
     {
         _id: "67rdca3eeb7f6fgeed471815",
         name: "Джон Дориан",
@@ -142,10 +142,11 @@ export const users = [
         bookmark: false
     }
 ];
+
 const fetchAll = () =>
     new Promise((resolve) => {
         window.setTimeout(function() {
-            resolve(professions);
+            resolve(users);
         }, 2000);
     });
 
