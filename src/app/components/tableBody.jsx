@@ -11,7 +11,7 @@ const TableBody = ({ data, columns }) => {
             }
             return component;
         }
-        return _.get(item, [columns[column].path]);
+        return _.get(item, columns[column].path);
     };
     return (
         <tbody>

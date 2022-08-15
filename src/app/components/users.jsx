@@ -12,11 +12,15 @@ const Users = () => {
     const [currentPage, setCurrentPage] = useState(1);
     const [professions, setProfession] = useState([]);
     const [selectedProf, setSelectedProf] = useState();
-    const [sortBy, setSortBy] = useState({ iter: "name", order: "asc" });
+    const [sortBy, setSortBy] = useState({ path: "name", order: "asc" });
     const pageSize = 8;
     const [users, setUsers] = useState();
+    const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        api.professions.fetchAll().then((data) => setProfession(data));
+        api.professions
+            .fetchAll()
+            .then((data) => setProfession(data))
+            .finally(() => setIsLoading(false));
     }, []);
 
     useEffect(() => {
@@ -48,13 +52,13 @@ const Users = () => {
         setSortBy(item);
     };
 
-    if (users) {
+    if (!isLoading) {
         const filteredUsers = selectedProf
             ? users.filter(
-                  (user) =>
-                      JSON.stringify(user.profession) ===
-                      JSON.stringify(selectedProf)
-              )
+                (user) =>
+                    JSON.stringify(user.profession) ===
+                    JSON.stringify(selectedProf)
+            )
             : users;
         const count = filteredUsers.length;
         const sortedUsers = _.orderBy(
