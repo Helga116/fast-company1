@@ -5,7 +5,6 @@ import Users from "./components/users";
 import Main from "./components/main";
 import Login from "./components/login";
 import Loading from "./components/loading";
-// import UsersList from "./components/usersList";
 import User from "./components/user";
 
 function App() {
