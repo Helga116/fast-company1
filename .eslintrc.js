@@ -23,6 +23,8 @@ module.exports = {
                 named: "never",
                 asyncArrow: "never"
             }
-        ]
+        ],
+        "multiline-ternary": ["off"],
+        "no-case-declarations": 0
     }
 };

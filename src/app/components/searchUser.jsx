@@ -1,11 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-const SearchUser = ({ onChange, onClick }) => {
+const SearchUser = ({ searchQuery, onChange, onClick }) => {
     return (
         <div className="input-group mb-3">
             <input
                 type="text"
+                value={searchQuery}
                 className="form-control"
                 placeholder="Search..."
                 onChange={onChange}
@@ -24,6 +25,7 @@ const SearchUser = ({ onChange, onClick }) => {
 };
 
 SearchUser.propTypes = {
+    searchQuery: PropTypes.string,
     type: PropTypes.string,
     onChange: PropTypes.func,
     onClick: PropTypes.func
