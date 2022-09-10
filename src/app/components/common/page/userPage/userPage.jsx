@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import api from "../../../../api";
 import Qualities from "../../../ui/qualities";
 
-const UserPage = ({ userId }) => {
+const UserPage = ({ props }) => {
+    const params = useParams(props);
+    const { userId } = params;
+
     const [user, setUser] = useState();
     useEffect(() => {
         api.users.getById(userId.toString()).then((user) => setUser(user));
@@ -19,7 +22,7 @@ const UserPage = ({ userId }) => {
                 <h2>Завершенные встречи: {user.completedMeetings}</h2>
                 <h3>Рейтинг: {user.rate} /5</h3>
 
-                <Link to={`${userId}/edit`}>Изменить</Link>
+                <Link to={`/users/${userId}/edit`}>Изменить</Link>
             </div>
         );
     } else {
@@ -28,7 +31,7 @@ const UserPage = ({ userId }) => {
 };
 
 UserPage.propTypes = {
-    userId: PropTypes.string.isRequired
+    props: PropTypes.object
 };
 
 export default UserPage;
