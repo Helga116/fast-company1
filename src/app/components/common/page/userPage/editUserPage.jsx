@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { useParams, useHistory, Link } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import TextField from "../../form/textField";
 import SelectField from "../../form/selectField";
 import RadioField from "../../form/radioField";
@@ -79,6 +79,7 @@ const EditUserPage = () => {
         setErrors(errors);
         return Object.keys(errors).length === 0;
     };
+    const history = useHistory();
     const isValid = Object.keys(errors).length === 0;
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -86,12 +87,9 @@ const EditUserPage = () => {
         if (!isValid) return;
 
         api.users.update(userId, data);
-    };
-
-    const history = useHistory();
-    const goToUserPage = () => {
         history.push(`/users/${userId}`);
     };
+
     return (
         <div className="container mt-5">
             <div className="row">
@@ -147,11 +145,8 @@ const EditUserPage = () => {
                             type="submit"
                             disabled={!isValid}
                             className="btn btn-primary w-100 mx-auto"
-                            onClick={goToUserPage}
                         >
-                            <Link to="/users/userId" userId={userId}>
-                                Обновить
-                            </Link>
+                            Обновить
                         </button>
                     </form>
                 </div>
