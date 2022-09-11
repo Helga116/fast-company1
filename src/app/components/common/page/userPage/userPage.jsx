@@ -10,7 +10,7 @@ const UserPage = ({ props }) => {
 
     const [user, setUser] = useState();
     useEffect(() => {
-        api.users.getById(userId.toString()).then((user) => setUser(user));
+        api.users.getById(userId).then((user) => setUser(user));
     }, []);
 
     if (user) {
