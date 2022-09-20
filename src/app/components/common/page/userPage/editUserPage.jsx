@@ -23,21 +23,29 @@ const EditUserPage = ({ props }) => {
     const [errors, setErrors] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
-        api.professions.fetchAll().then((data) => {
-            const professionsList = Object.keys(data).map((professionName) => ({
-                label: data[professionName].name,
-                value: data[professionName]._id
-            }));
-            setProfession(professionsList);
-        });
-        api.qualities.fetchAll().then((data) => {
-            const qualitiesList = Object.keys(data).map((optionName) => ({
-                label: data[optionName].name,
-                value: data[optionName]._id,
-                color: data[optionName].color
-            }));
-            setQualities(qualitiesList);
-        });
+        api.professions
+            .fetchAll()
+            .then((data) => {
+                const professionsList = Object.keys(data).map(
+                    (professionName) => ({
+                        label: data[professionName].name,
+                        value: data[professionName]._id
+                    })
+                );
+                setProfession(professionsList);
+            })
+            .finally(() => setIsLoading(false));
+        api.qualities
+            .fetchAll()
+            .then((data) => {
+                const qualitiesList = Object.keys(data).map((optionName) => ({
+                    label: data[optionName].name,
+                    value: data[optionName]._id,
+                    color: data[optionName].color
+                }));
+                setQualities(qualitiesList);
+            })
+            .finally(() => setIsLoading(false));
 
         api.users
             .getById(userId)
@@ -51,10 +59,7 @@ const EditUserPage = ({ props }) => {
                 );
                 setData({
                     ...data,
-                    profession: {
-                        label: data.profession.name,
-                        value: data.profession._id
-                    },
+                    profession: data.profession._id,
                     qualities: qualitiesList
                 });
             })
@@ -104,7 +109,7 @@ const EditUserPage = ({ props }) => {
         const { profession, qualities } = data;
         api.users.update(userId, {
             ...data,
-            profession: getProfessionById(profession.value),
+            profession: getProfessionById(profession),
             qualities: getQualities(qualities)
         });
         history.push(`/users/${userId}`);
@@ -158,10 +163,11 @@ const EditUserPage = ({ props }) => {
                             />
                             <SelectField
                                 label="Измените профессию"
-                                id={professions.value}
-                                defaultOption={data.profession.label}
+                                id="profession"
+                                defaultOption="Выберите профессию"
+                                value={data.profession}
                                 options={professions}
-                                name={professions.label}
+                                name="profession"
                                 onChange={handleChange}
                                 error={errors.profession}
                             />

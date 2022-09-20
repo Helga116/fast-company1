@@ -30,10 +30,10 @@ const SelectField = ({
                 className={getInputClasses()}
                 id={name}
                 name={name}
-                defaultValue={value}
+                value={value}
                 onChange={handleChange}
             >
-                <option selected disabled value="">
+                <option disabled value="">
                     {defaultOption}
                 </option>
                 {optionsArray.length > 0 &&
@@ -52,6 +52,7 @@ export default SelectField;
 
 SelectField.propTypes = {
     defaultOption: PropTypes.string,
+    defaultValue: PropTypes.string,
     label: PropTypes.string,
     value: PropTypes.string,
     name: PropTypes.string,

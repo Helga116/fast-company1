@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import api from "../../../../api";
-import Qualities from "../../../ui/qualities";
+import Comments from "../../../ui/comments";
+import UserCard from "../../../ui/userCard";
+import QualitiesCard from "../../../ui/qualitiesCard";
+import MeetingsCard from "../../../ui/meetingsCard";
 
 const UserPage = ({ props }) => {
     const params = useParams(props);
@@ -12,17 +15,21 @@ const UserPage = ({ props }) => {
     useEffect(() => {
         api.users.getById(userId).then((user) => setUser(user));
     }, []);
+    console.log(user);
 
     if (user) {
         return (
-            <div>
-                <h1>{user.name}</h1>
-                {<Qualities qualities={user.qualities} />}
-                <h2>Профессия: {user.profession.name}</h2>
-                <h2>Завершенные встречи: {user.completedMeetings}</h2>
-                <h3>Рейтинг: {user.rate} /5</h3>
-
-                <Link to={`/users/${userId}/edit`}>Изменить</Link>
+            <div className="container">
+                <div className="row gutters-sm">
+                    <div className="col-md-4 mb-3">
+                        <UserCard user={user} />
+                        <QualitiesCard data={user.qualities} />
+                        <MeetingsCard value={user.completedMeetings} />
+                    </div>
+                    <div className="col-md-8">
+                        <Comments />
+                    </div>
+                </div>
             </div>
         );
     } else {
