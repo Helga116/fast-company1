@@ -15,7 +15,6 @@ export const QualitiesProvider = ({ children }) => {
     const [error, setError] = useState(null);
     useEffect(() => {
         getQualitiesList();
-        getQualities();
     }, []);
     useEffect(() => {
         if (error !== null) {
@@ -33,9 +32,9 @@ export const QualitiesProvider = ({ children }) => {
         }
     }
 
-    function getQualities(users, qualities) {
-        return users.map((user) => {
-            // return qualities.filter((q) => q._id === user.qualities.id);
+    function getQualities(ids) {
+        return ids.map((id) => {
+            return qualities.find((q) => q._id === id);
         });
     }
 

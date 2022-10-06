@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import Quality from "./quality";
 import { useQualities } from "../../../hooks/useQualities";
 
-const QualitiesList = (qualities) => {
+const QualitiesList = ({ qualities }) => {
     const { isLoading, getQualities } = useQualities();
     const userQualities = getQualities(qualities);
     if (!isLoading) {
